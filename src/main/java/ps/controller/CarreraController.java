@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ps.model.*;
 import ps.repository.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/carreras")
@@ -26,25 +27,19 @@ public class CarreraController {
   	public Carrera crearCarrera(@RequestBody Carrera carrera) {
   		return carreraRepository.save(carrera);
   	}
- 	
- 	
-// 	// Obtener un jugador por ID
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Carrera> obtenerCarreraPorId(@PathVariable Long id) {
-//        java.util.Optional<Carrera> carrera1 = carreraRepository.findById(id);
-//        if (carrera1.isPresent()) {
-//            return ResponseEntity.ok(carrera1.get());
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-//
-// 	// Actualizar un jugador existente por ID
-// 	@PutMapping("/{id}")
-// 	public Jugador actualizarJugador(@PathVariable Long id, @RequestBody Jugador jugadorActualizado) {
-// 		jugadorActualizado.setId(id);
-// 		return jugadorRepository.save(jugadorActualizado);
-// 	}
+  	
+  	// Obtiene carrera segun ID
+	@GetMapping("/{id}")
+	Optional<Carrera> one(@PathVariable Long id) {
+	    return carreraRepository.findById(id);
+	}
+
+ 	// Actualiza un jugador existente por ID
+ 	@PutMapping("/{id}")
+ 	public Carrera actualizarCarrera(@PathVariable Long id, @RequestBody Carrera carreraActualizada) {
+ 		carreraActualizada.setId(id);
+ 		return carreraRepository.save(carreraActualizada);
+ 	}
 //
 // 	// Eliminar un jugador por ID
 // 	@DeleteMapping("/{id}")

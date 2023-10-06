@@ -37,6 +37,10 @@ public class Carrera {
 //	public List<Carrera_Estudiante> getEstudiantes() {
 //		return new ArrayList<>(this.estudiantes);
 //	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;
