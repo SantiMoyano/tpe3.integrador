@@ -1,13 +1,15 @@
 package ps.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import ps.model.*;
 import ps.repository.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/carrera")
+@RequestMapping("/carreras")
 public class CarreraController {
 	
     @Autowired
@@ -15,15 +17,27 @@ public class CarreraController {
     
     // Obtener todas las carreras
  	@GetMapping
- 	public String obtenerTodasLasCarreras() {
- 		return "arbol";
+ 	public List<Carrera> obtenerTodasLasCarreras() {
+ 		return carreraRepository.findAll();
  	}
-
-// 	// Crear un nuevo jugador
-// 	@PostMapping
-// 	public Jugador crearJugador(@RequestBody Jugador jugador) {
-// 		return jugadorRepository.save(jugador);
-// 	}
+ 	
+ 	// Crear una nueva carrera
+  	@PostMapping
+  	public Carrera crearCarrera(@RequestBody Carrera carrera) {
+  		return carreraRepository.save(carrera);
+  	}
+ 	
+ 	
+// 	// Obtener un jugador por ID
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Carrera> obtenerCarreraPorId(@PathVariable Long id) {
+//        java.util.Optional<Carrera> carrera1 = carreraRepository.findById(id);
+//        if (carrera1.isPresent()) {
+//            return ResponseEntity.ok(carrera1.get());
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 //
 // 	// Actualizar un jugador existente por ID
 // 	@PutMapping("/{id}")
