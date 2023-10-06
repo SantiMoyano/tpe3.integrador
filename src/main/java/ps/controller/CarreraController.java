@@ -40,12 +40,12 @@ public class CarreraController {
  		carreraActualizada.setId(id);
  		return carreraRepository.save(carreraActualizada);
  	}
-//
-// 	// Eliminar un jugador por ID
-// 	@DeleteMapping("/{id}")
-// 	public void eliminarJugador(@PathVariable Long id) {
-// 		jugadorRepository.deleteById(id);
-// 	}
+
+ 	// Eliminar un jugador por ID
+ 	@DeleteMapping("/{id}")
+ 	public void eliminarJugador(@PathVariable Long id) {
+ 		carreraRepository.deleteById(id);
+ 	}
 //
 // 	// Obtener jugadores con valor mayor a 1,000,000
 // 	@GetMapping("/valor-mayor")
