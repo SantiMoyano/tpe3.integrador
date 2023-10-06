@@ -9,7 +9,7 @@ public class Estudiante {
 
 	@Id 
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private int dni;
 	private String nombre;
 	private String apellido;
@@ -92,9 +92,13 @@ public class Estudiante {
 	public void setNumeroLibreta(int numeroLibreta) {
 		this.numeroLibreta = numeroLibreta;
 	}
-
-	public int getId() {
+	
+	public Long getId() {
 		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 //	public List<Carrera_Estudiante> getCarreras() {
@@ -111,6 +115,4 @@ public class Estudiante {
 				+ edad + ", genero=" + genero + ", ciudad=" + ciudad + ", numeroLibreta=" + numeroLibreta
 				+ ", carreras= ]";
 	}
-	
-	
 }
