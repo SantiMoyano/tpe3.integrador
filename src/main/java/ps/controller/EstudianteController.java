@@ -13,27 +13,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ps.dto.CarreraConInscripcionesDTO;
 import ps.dto.EstudianteDTO;
+import ps.dto.EstudiantesPorCarreraYCiudadDTO;
 import ps.dto.MatricularEstudianteDTO;
+import ps.model.Carrera;
 import ps.model.Carrera_Estudiante;
 import ps.model.Estudiante;
 import ps.repository.CarreraRepository;
+import ps.repository.Carrera_EstudianteRepository;
 import ps.repository.EstudianteRepository;
+import ps.services.EstudiantePorCarreraYCiudadService;
 
 @RestController
 @RequestMapping("/estudiantes")
 public class EstudianteController {
 	
 	@Autowired
-    private EstudianteRepository repository;
+    private EstudianteRepository estudianteRepository;
+	
+	@Autowired 
+	private EstudiantePorCarreraYCiudadService estudianteService;
 	
     // Obtener todas las carreras
  	@GetMapping
  	public List<EstudianteDTO> obtenerTodosLosEstudiantes() {
- 		List<Estudiante> estudiantes = repository.findAll();
+ 		List<Estudiante> estudiantes = estudianteRepository.findAll();
  	    List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
  	    
  	    for (Estudiante estudiante : estudiantes) {
@@ -46,7 +54,7 @@ public class EstudianteController {
  	// Obtiene estudiantes ordenados por nombre
   	@GetMapping("/por-nombre")
      public List<EstudianteDTO> obtenerEstudiantesOrdenadosPorNombre() {
-  		List<Estudiante> estudiantes = repository.findAllOrderedByName();
+  		List<Estudiante> estudiantes = estudianteRepository.findAllOrderedByName();
   	    List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
   	    
   	    for (Estudiante estudiante : estudiantes) {
@@ -59,7 +67,7 @@ public class EstudianteController {
   	// Obtiene estudiante segun numero libreta
   	@GetMapping("/libreta/{numeroLibreta}")
  	public ResponseEntity<EstudianteDTO> obtenerEstudiantePorLibreta(@PathVariable int numeroLibreta) {
-  		Estudiante estudiante = repository.findByNumeroLibreta(numeroLibreta);
+  		Estudiante estudiante = estudianteRepository.findByNumeroLibreta(numeroLibreta);
 
   	    if (estudiante != null) {
   	        EstudianteDTO estudianteDTO = mapEstudianteToDTO(estudiante);
@@ -72,7 +80,7 @@ public class EstudianteController {
   	// Obtiene estudiantes segun genero
   	@GetMapping("/genero/{genero}")
   	public List<EstudianteDTO> obtenerEstudiantesPorGenero(@PathVariable String genero) {
-  	    List<Estudiante> estudiantes = repository.findByGenero(genero);
+  	    List<Estudiante> estudiantes = estudianteRepository.findByGenero(genero);
 
   	    List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
   	    
@@ -86,26 +94,34 @@ public class EstudianteController {
   	// Obtiene estudiante segun ID
  	@GetMapping("/{id}")
  	Optional<Estudiante> one(@PathVariable Long id) {
- 	    return repository.findById(id);
+ 	    return estudianteRepository.findById(id);
  	}
+ 	
+ 	@GetMapping("/carrera-ciudad")
+ 	public List<EstudiantesPorCarreraYCiudadDTO> obtenerEstudiantesPorCarreraYCiudad(
+ 	        @RequestParam("carrera") String nombreCarrera,
+ 	        @RequestParam("ciudad") String ciudadResidencia) {
+ 	    
+ 	    return estudianteService.obtenerEstudiantesPorCarreraYCiudad(nombreCarrera, ciudadResidencia);
+ 	}  
  	
  	// Crea un nuevo estudiante
   	@PostMapping
   	public Estudiante crearEstudiante(@RequestBody Estudiante estudiante) {
-  		return repository.save(estudiante);
+  		return estudianteRepository.save(estudiante);
   	}
 
  	// Actualiza un estudiante existente por ID
  	@PutMapping("/{id}")
  	public Estudiante actualizarCarrera(@PathVariable Long id, @RequestBody Estudiante carreraActualizada) {
  		carreraActualizada.setId(id);
- 		return repository.save(carreraActualizada);
+ 		return estudianteRepository.save(carreraActualizada);
  	}
 
  	// Elimina un jugador por ID
  	@DeleteMapping("/{id}")
  	public void eliminarJugador(@PathVariable Long id) {
- 		repository.deleteById(id);
+ 		estudianteRepository.deleteById(id);
  	}
  	
  	// Metodo para convertir entidad estudiante a DTO

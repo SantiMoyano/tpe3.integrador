@@ -10,6 +10,8 @@ import ps.model.Carrera;
 
 @Repository
 public interface CarreraRepository extends JpaRepository<Carrera, Long>{
+
+	Carrera findByNombre(String nombreCarrera);
 		
 		
 }
