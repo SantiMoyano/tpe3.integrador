@@ -13,8 +13,8 @@ public class Carrera {
 	@Column
 	private String nombre;
 	
-//	@OneToMany(mappedBy = "carrera", fetch = FetchType.EAGER)
-//	private List<Carrera_Estudiante> estudiantes;
+	@OneToMany(mappedBy = "carrera", fetch = FetchType.EAGER)
+	private List<Carrera_Estudiante> estudiantes;
 	
 	public Carrera() {
 		super();
@@ -23,7 +23,7 @@ public class Carrera {
 	public Carrera(String nombre) {
 		super();
 		this.nombre = nombre;
-		//this.estudiantes = new ArrayList<>();
+		this.estudiantes = new ArrayList<>();
 	}	
 
 	public String getNombre() {
@@ -34,9 +34,9 @@ public class Carrera {
 		this.nombre = nombre;
 	}
 
-//	public List<Carrera_Estudiante> getEstudiantes() {
-//		return new ArrayList<>(this.estudiantes);
-//	}
+	public List<Carrera_Estudiante> getEstudiantes() {
+		return new ArrayList<>(this.estudiantes);
+	}
 	
 	public void setId(Long id) {
 		this.id = id;

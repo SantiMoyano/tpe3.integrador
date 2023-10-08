@@ -46,12 +46,5 @@ public class CarreraController {
  	public void eliminarJugador(@PathVariable Long id) {
  		carreraRepository.deleteById(id);
  	}
-//
-// 	// Obtener jugadores con valor mayor a 1,000,000
-// 	@GetMapping("/valor-mayor")
-// 	public List<Jugador> obtenerJugadoresConValorMayor() {
-// 		// return jugadorRepository.findByValorGreaterThan(1000000);
-// 		// return jugadorRepository.findJugadoresPorPosicion("Delantero");
-// 		return jugadorRepository.findJugadoresConValorMayorQue(1000000);
-// 	}
+
 }

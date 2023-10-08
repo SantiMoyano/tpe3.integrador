@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import ps.model.Carrera_Estudiante;
 
 @Repository
-public interface Carrera_EstudianteRepository extends JpaRepository<Carrera_Estudiante, Integer>{
+public interface Carrera_EstudianteRepository extends JpaRepository<Carrera_Estudiante, Long>{
 
 }
