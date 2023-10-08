@@ -10,7 +10,6 @@ public class Carrera {
 	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column
 	private String nombre;
 	
 	@OneToMany(mappedBy = "carrera", fetch = FetchType.EAGER)
@@ -35,7 +34,7 @@ public class Carrera {
 	}
 
 	public List<Carrera_Estudiante> getEstudiantes() {
-		return new ArrayList<>(this.estudiantes);
+		return estudiantes;
 	}
 	
 	public void setId(Long id) {
