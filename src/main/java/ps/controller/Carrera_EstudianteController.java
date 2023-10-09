@@ -26,7 +26,7 @@ public class Carrera_EstudianteController {
     @Autowired
     private MatricularEstudianteService matricularEstudianteService;
 
-    // Obtener todas las matriculaciones
+    // Obtener todas las matriculaciones/inscripciones
  	@GetMapping
  	public List<MatricularEstudianteDTO> obtenerTodasLasMatriculas() {
  	   List<Carrera_Estudiante> matriculas = repository.findAll();
@@ -45,7 +45,7 @@ public class Carrera_EstudianteController {
  	    return matriculasDTO;
  	}
  	
- 	// Crear una nueva carrera
+ 	// Crear una nueva matricula
   	@PostMapping
   	public ResponseEntity<String> crearMatricula(@RequestBody MatricularEstudianteDTO request) {
   		try {

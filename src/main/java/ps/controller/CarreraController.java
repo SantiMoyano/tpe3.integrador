@@ -1,13 +1,15 @@
 package ps.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ps.dto.CarreraConInscripcionesDTO;
 import ps.dto.CarreraDTO;
+import ps.dto.ReporteCarreraDTO;
 import ps.model.*;
 import ps.repository.*;
+import ps.services.CarrerasMasInscriptasService;
+import ps.services.ReporteService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,12 @@ public class CarreraController {
     private CarreraRepository carreraRepository;
     
     @Autowired
-    private Carrera_EstudianteRepository matriculaRepository;
+	private ReporteService reporteService;
     
-    // Obtener todas las carreras
+    @Autowired
+	private CarrerasMasInscriptasService carrerasMasInscriptasService;
+    
+    // Obtiene todas las carreras
  	@GetMapping
  	public List<CarreraDTO> obtenerTodasLasCarreras() {
  		List<Carrera> carreras = carreraRepository.findAll();
@@ -38,26 +43,19 @@ public class CarreraController {
  		return carrerasDTO;
  	}
  	
+ 	// Obtiene las carreras con mas inscriptos ordenadas de mayor a menor
  	@GetMapping("/carreras-con-estudiantes")
   	public List<CarreraConInscripcionesDTO> obtenerCarrerasConEstudiantes() {
-  	    List<Carrera> carreras = carreraRepository.findAll();
-  	    List<CarreraConInscripcionesDTO> carrerasConEstudiantes = new ArrayList<>();
-  	    
-  	    for (Carrera carrera : carreras) {
-  	        List<Carrera_Estudiante> inscripciones = matriculaRepository.findByCarrera(carrera);
-  	        
-  	        CarreraConInscripcionesDTO carreraDTO = new CarreraConInscripcionesDTO();
-  	        carreraDTO.setNombre(carrera.getNombre());
-  	        carreraDTO.setCantidadInscritos(inscripciones.size());
-  	        
-  	        carrerasConEstudiantes.add(carreraDTO);
-  	    }
-  	    
-  	    // Ordena la lista de carreras por la cantidad de inscritos
-  	    carrerasConEstudiantes.sort((c1, c2) -> Integer.compare(c2.getCantidadInscritos(), c1.getCantidadInscritos()));
-  	    
-  	    return carrerasConEstudiantes;
+  	    List<CarreraConInscripcionesDTO> carreras = carrerasMasInscriptasService.obtenerCarreras();
+  	    return carreras;
   	}
+ 	
+ 	// Obtiene reporte de las carreras 
+ 	@GetMapping("/reporte")
+	public List<ReporteCarreraDTO> reporteCarreras() {
+		List<ReporteCarreraDTO> reporte = reporteService.generarReporteCarreras();
+		return reporte;
+	}
  	
  	// Crear una nueva carrera
   	@PostMapping

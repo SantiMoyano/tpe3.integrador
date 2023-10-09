@@ -5,15 +5,26 @@ public class EstudiantesPorCarreraYCiudadDTO {
 	private String nombreEstudiante;
 	private String apellidoEstudiante;
 	private String nombreCarrera;
+	private String ciudad;
+	
 	public EstudiantesPorCarreraYCiudadDTO() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public EstudiantesPorCarreraYCiudadDTO(String nombreEstudiante, String apellidoEstudiante, String nombreCarrera) {
+	public EstudiantesPorCarreraYCiudadDTO(String nombreEstudiante, String apellidoEstudiante, String nombreCarrera, String ciudad) {
 		super();
 		this.nombreEstudiante = nombreEstudiante;
 		this.apellidoEstudiante = apellidoEstudiante;
 		this.nombreCarrera = nombreCarrera;
+		this.ciudad = ciudad;
+	}
+	
+	public String getCiudad() {
+		return ciudad;
+	}
+	
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
 	
 	public String getNombreEstudiante() {

@@ -6,25 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import ps.dto.CarreraConInscripcionesDTO;
 import ps.dto.EstudianteDTO;
 import ps.dto.EstudiantesPorCarreraYCiudadDTO;
-import ps.dto.MatricularEstudianteDTO;
-import ps.model.Carrera;
-import ps.model.Carrera_Estudiante;
 import ps.model.Estudiante;
-import ps.repository.CarreraRepository;
-import ps.repository.Carrera_EstudianteRepository;
 import ps.repository.EstudianteRepository;
 import ps.services.EstudiantePorCarreraYCiudadService;
 
@@ -38,7 +24,7 @@ public class EstudianteController {
 	@Autowired 
 	private EstudiantePorCarreraYCiudadService estudianteService;
 	
-    // Obtener todas las carreras
+    // Obtener todos los estudiantes como DTO
  	@GetMapping
  	public List<EstudianteDTO> obtenerTodosLosEstudiantes() {
  		List<Estudiante> estudiantes = estudianteRepository.findAll();
@@ -51,10 +37,12 @@ public class EstudianteController {
  	    return estudiantesDTO;
   	}
  	
- 	// Obtiene estudiantes ordenados por nombre
+ 	// Obtiene estudiantes ordenados por nombre como DTO
   	@GetMapping("/por-nombre")
      public List<EstudianteDTO> obtenerEstudiantesOrdenadosPorNombre() {
   		List<Estudiante> estudiantes = estudianteRepository.findAllOrderedByName();
+  		
+  		//Convierte a DTO
   	    List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
   	    
   	    for (Estudiante estudiante : estudiantes) {
@@ -81,7 +69,6 @@ public class EstudianteController {
   	@GetMapping("/genero/{genero}")
   	public List<EstudianteDTO> obtenerEstudiantesPorGenero(@PathVariable String genero) {
   	    List<Estudiante> estudiantes = estudianteRepository.findByGenero(genero);
-
   	    List<EstudianteDTO> estudiantesDTO = new ArrayList<>();
   	    
   	    for (Estudiante estudiante : estudiantes) {
@@ -97,10 +84,11 @@ public class EstudianteController {
  	    return estudianteRepository.findById(id);
  	}
  	
- 	@GetMapping("/carrera-ciudad")
+ 	// Obtiene estudiantes segun carrera y ciudad
+ 	@GetMapping("/carrera-ciudad/{carrera}/{ciudad}")
  	public List<EstudiantesPorCarreraYCiudadDTO> obtenerEstudiantesPorCarreraYCiudad(
- 	        @RequestParam("carrera") String nombreCarrera,
- 	        @RequestParam("ciudad") String ciudadResidencia) {
+ 			@PathVariable("carrera") String nombreCarrera,
+ 	        @PathVariable("ciudad") String ciudadResidencia) {
  	    
  	    return estudianteService.obtenerEstudiantesPorCarreraYCiudad(nombreCarrera, ciudadResidencia);
  	}  

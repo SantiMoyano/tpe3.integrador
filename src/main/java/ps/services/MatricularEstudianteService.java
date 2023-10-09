@@ -1,7 +1,5 @@
 package ps.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +24,7 @@ public class MatricularEstudianteService {
     private Carrera_EstudianteRepository matriculaRepository;
 
     public void crearMatricula(MatricularEstudianteDTO request) {
-        // Obtener las instancias de Estudiante y Carrera a partir de los IDs
+        // Obtiene las instancias de Estudiante y Carrera a partir de los IDs
         Estudiante estudiante = estudianteRepository.findById(request.getEstudianteId())
         		.orElseThrow(() -> new RuntimeException("Estudiante no encontrado con ID: " + request.getEstudianteId()));
 
@@ -37,7 +35,7 @@ public class MatricularEstudianteService {
         	// Crea la matrícula con las instancias de Estudiante y Carrera
             Carrera_Estudiante matricula = new Carrera_Estudiante(estudiante, carrera, request.getIngreso(), request.getEgreso());
             
-         // Guarda la matrícula en la base de datos
+            // Guarda la matrícula en la base de datos
             matriculaRepository.save(matricula);
         }
     }

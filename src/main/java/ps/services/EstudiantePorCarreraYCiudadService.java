@@ -29,12 +29,16 @@ public class EstudiantePorCarreraYCiudadService {
     public List<EstudiantesPorCarreraYCiudadDTO> obtenerEstudiantesPorCarreraYCiudad(
             String nombreCarrera, String ciudadResidencia) {
         
+    	// Busca carrera con el nombre ingresado
         Carrera carrera = carreraRepository.findByNombre(nombreCarrera);
-        List<Estudiante> estudiantes = estudianteRepository.findByCiudad(ciudadResidencia);
         
+        // Busca estudiantes de ciudad ingresada
+        List<Estudiante> estudiantes = estudianteRepository.findByCiudad(ciudadResidencia);
         List<EstudiantesPorCarreraYCiudadDTO> estudiantesDTO = new ArrayList<>();
         
+        // Itera sobre los estudiantes para convertirlos en dto
         for (Estudiante estudiante : estudiantes) {
+        	// Busca si existe un estudiante de la ciudad ingresada inscripto en la carrera ingresada
             Carrera_Estudiante matricula = carrera_estudianteRepository.findByCarreraAndEstudiante(carrera, estudiante);
             
             if (matricula != null) {
@@ -42,6 +46,7 @@ public class EstudiantePorCarreraYCiudadService {
                 es_dto.setNombreEstudiante(estudiante.getNombre());
                 es_dto.setApellidoEstudiante(estudiante.getApellido());
                 es_dto.setNombreCarrera(carrera.getNombre());
+                es_dto.setCiudad(estudiante.getCiudad());
                 estudiantesDTO.add(es_dto);
             }
         }
